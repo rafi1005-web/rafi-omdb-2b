@@ -16,18 +16,20 @@
       <div class="card-body">
         <div class="row">
           <div class="col-md-4">
-            @if($movie['Poster'] != 'N/A')
-              <img src="{{ $movie['Poster'] }}" class="img-fluid rounded shadow">
-            @else
-              <div class="bg-secondary text-white text-center py-5 rounded">
-                <i class="fas fa-image fa-5x"></i>
-                <p class="mt-2">{{ __('dashboard.poster') }} N/A</p>
-              </div>
-            @endif
+            @php
+              $posterUrl = $movie['Poster'];
+              if ($posterUrl == 'N/A' || empty($posterUrl)) {
+                  $posterUrl = 'https://via.placeholder.com/300x450?text=No+Poster';
+              } else {
+                  $posterUrl = str_replace('http://', 'https://', $posterUrl);
+              }
+            @endphp
+            <img src="{{ $posterUrl }}" class="img-fluid rounded shadow" alt="Poster">
           </div>
           <div class="col-md-8">
             <h3>{{ $movie['Title'] }}</h3>
             <hr>
+
             <div class="row">
               <div class="col-md-6">
                 <p><strong>{{ __('dashboard.year') }}:</strong> {{ $movie['Year'] }}</p>
@@ -42,13 +44,26 @@
                 <p><strong>{{ __('dashboard.country') }}:</strong> {{ $movie['Country'] ?? 'N/A' }}</p>
               </div>
             </div>
+
+
             <p><strong>{{ __('dashboard.plot') }}:</strong></p>
-            <p class="text-justify">{{ $movie['Plot'] ?? __('dashboard.no_plot') }}</p>
+            @if(app()->getLocale() == 'id')
+              <div class="alert alert-info py-2" style="font-size: 14px;">
+                <i class="fas fa-info-circle"></i> {{ __('dashboard.plot_note') }}
+              </div>
+            @endif
+            <p class="text-justify">
+              {{ $movie['Plot'] ?: __('dashboard.no_plot') }}
+            </p>
+
             <hr>
+
             <div class="row mt-3">
               <div class="col-md-6">
                 @if(isset($isFavorited) && $isFavorited)
-                  <button class="btn btn-success btn-block" disabled><i class="fas fa-check-circle"></i> {{ __('dashboard.add_to_favorite') }}</button>
+                  <button class="btn btn-success btn-block" disabled>
+                    <i class="fas fa-check-circle"></i> {{ __('dashboard.add_to_favorite') }}
+                  </button>
                 @else
                   <form method="POST" action="{{ route('movies.store_favorite') }}">
                     @csrf
@@ -57,12 +72,16 @@
                     <input type="hidden" name="poster" value="{{ $movie['Poster'] }}">
                     <input type="hidden" name="year" value="{{ $movie['Year'] }}">
                     <input type="hidden" name="type" value="{{ $movie['Type'] ?? 'movie' }}">
-                    <button type="submit" class="btn btn-danger btn-block"><i class="fas fa-heart"></i> {{ __('dashboard.add_to_favorite') }}</button>
+                    <button type="submit" class="btn btn-danger btn-block">
+                      <i class="fas fa-heart"></i> {{ __('dashboard.add_to_favorite') }}
+                    </button>
                   </form>
                 @endif
               </div>
               <div class="col-md-6">
-                <a href="{{ url()->previous() }}" class="btn btn-secondary btn-block"><i class="fas fa-arrow-left"></i> {{ __('dashboard.back_btn') }}</a>
+                <a href="{{ url()->previous() }}" class="btn btn-secondary btn-block">
+                  <i class="fas fa-arrow-left"></i> {{ __('dashboard.back_btn') }}
+                </a>
               </div>
             </div>
           </div>

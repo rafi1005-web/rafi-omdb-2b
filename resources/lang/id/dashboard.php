@@ -1,11 +1,14 @@
 <?php
 
 return [
+
     'dashboard' => 'Dasbor',
     'all_movies' => 'Semua Film',
     'search_movies' => 'Cari Film',
     'favorite_movies' => 'Film Favorit',
     'my_favorites' => 'Favorit Saya',
+
+
     'poster' => 'Poster',
     'title' => 'Judul',
     'year' => 'Tahun',
@@ -14,16 +17,9 @@ return [
     'detail' => 'Detail',
     'add_to_favorite' => 'Tambah ke Favorit',
     'remove' => 'Hapus',
-    'no_favorites' => 'Belum ada favorit',
-    'start_adding' => 'Mulai tambahkan film ke daftar favorit Anda!',
-    'search_favorites_btn' => 'Cari Favorit',
-    'no_movies_found' => 'Tidak ada film ditemukan. Coba kata kunci lain.',
-    'enter_keyword' => 'Masukkan kata kunci untuk mencari film.',
-    'search_placeholder' => 'Cari film...',
-    'view_all' => 'Lihat Semua',
-    'search_now' => 'Cari Sekarang',
-    'view_favorites' => 'Lihat Favorit',
     'back_btn' => 'Kembali',
+
+
     'rating' => 'Rating',
     'duration' => 'Durasi',
     'genre' => 'Genre',
@@ -33,4 +29,20 @@ return [
     'country' => 'Negara',
     'plot' => 'Sinopsis',
     'no_plot' => 'Tidak ada sinopsis untuk film ini.',
+    'plot_note' => 'Sinopsis hanya tersedia dalam bahasa Inggris:',
+
+
+    'no_favorites' => 'Belum ada favorit',
+    'start_adding' => 'Mulai tambahkan film ke daftar favorit Anda!',
+    'search_favorites_btn' => 'Cari Favorit',
+    'no_movies_found' => 'Tidak ada film ditemukan. Coba kata kunci lain.',
+
+
+    'enter_keyword' => 'Masukkan kata kunci untuk mencari film.',
+    'search_placeholder' => 'Cari film...',
+
+
+    'view_all' => 'Lihat Semua',
+    'search_now' => 'Cari Sekarang',
+    'view_favorites' => 'Lihat Favorit',
 ];

@@ -23,14 +23,30 @@
             <tbody>
               @forelse($movies as $movie)
               <tr>
-                <td><img src="{{ $movie['Poster'] != 'N/A' ? $movie['Poster'] : 'https://via.placeholder.com/50' }}" width="50"></td>
+                <td>
+                  @php
+                    $posterUrl = $movie['Poster'];
+                    if ($posterUrl == 'N/A' || empty($posterUrl)) {
+                        $posterUrl = 'https://via.placeholder.com/50x70?text=No+Poster';
+                    } else {
+                        $posterUrl = str_replace('http://', 'https://', $posterUrl);
+                    }
+                  @endphp
+                  <img src="{{ $posterUrl }}" width="50" height="70" style="object-fit: cover;" alt="Poster">
+                </td>
                 <td>{{ $movie['Title'] }}</td>
                 <td>{{ $movie['Year'] }}</td>
                 <td>{{ ucfirst($movie['Type']) }}</td>
-                <td><a href="{{ route('movies.detail', $movie['imdbID']) }}" class="btn btn-info btn-sm">{{ __('dashboard.detail') }}</a></td>
+                <td>
+                  <a href="{{ route('movies.detail', $movie['imdbID']) }}" class="btn btn-info btn-sm">
+                    <i class="fas fa-info-circle"></i> {{ __('dashboard.detail') }}
+                  </a>
+                </td>
               </tr>
               @empty
-              <tr><td colspan="5" class="text-center">{{ __('dashboard.no_movies_found') }}</td></tr>
+              <tr>
+                <td colspan="5" class="text-center">{{ __('dashboard.no_movies_found') }}</td>
+              </tr>
               @endforelse
             </tbody>
           </table>
