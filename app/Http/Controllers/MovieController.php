@@ -11,6 +11,7 @@ class MovieController extends Controller
     private $apiKey = '145ec45b';
     private $baseUrl = 'http://www.omdbapi.com/';
 
+
     public function index(Request $request)
     {
         $keyword = $request->input('s', '');
@@ -28,11 +29,13 @@ class MovieController extends Controller
         return view('movies.index', compact('movies'));
     }
 
+
     public function allMovies()
     {
         $movies = session('search_results', []);
         return view('movies.all', compact('movies'));
     }
+
 
     public function detail($id)
     {
@@ -44,6 +47,7 @@ class MovieController extends Controller
         $isFavorited = Favorite::where('user_id', auth()->id())->where('imdb_id', $id)->exists();
         return view('movies.detail', compact('movie', 'isFavorited'));
     }
+
 
     public function listFavorites()
     {
@@ -65,10 +69,13 @@ class MovieController extends Controller
                 'type' => $request->type,
             ]);
 
+
+            $cleanTitle = html_entity_decode($request->title, ENT_QUOTES, 'UTF-8');
+
             if (app()->getLocale() == 'id') {
-                $message = '"' . $request->title . '" telah ditambahkan ke favorit!';
+                $message = $cleanTitle . ' telah ditambahkan ke favorit!';
             } else {
-                $message = '"' . $request->title . '" has been added to favorites!';
+                $message = $cleanTitle . ' has been added to favorites!';
             }
 
             return back()->with('success', $message);
@@ -91,10 +98,13 @@ class MovieController extends Controller
             $title = $favorite->title;
             $favorite->delete();
 
+
+            $cleanTitle = html_entity_decode($title, ENT_QUOTES, 'UTF-8');
+
             if (app()->getLocale() == 'id') {
-                $message = '"' . $title . '" telah dihapus dari favorit!';
+                $message = $cleanTitle . ' telah dihapus dari favorit!';
             } else {
-                $message = '"' . $title . '" has been removed from favorites!';
+                $message = $cleanTitle . ' has been removed from favorites!';
             }
 
             return redirect()->route('movies.favorite')->with('success', $message);
