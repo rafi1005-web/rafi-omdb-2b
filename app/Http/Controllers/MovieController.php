@@ -29,7 +29,6 @@ class MovieController extends Controller
         return view('movies.index', compact('movies'));
     }
 
-
     public function allMovies()
     {
         $movies = session('search_results', []);
@@ -54,6 +53,7 @@ class MovieController extends Controller
         $favorites = Favorite::where('user_id', auth()->id())->get();
         return view('favoritemovie.favorites', compact('favorites'));
     }
+
 
     public function storeFavorite(Request $request)
     {
@@ -81,14 +81,18 @@ class MovieController extends Controller
             return back()->with('success', $message);
         }
 
+
+        $cleanTitle = html_entity_decode($request->title, ENT_QUOTES, 'UTF-8');
+
         if (app()->getLocale() == 'id') {
-            $message = 'Film "' . $request->title . '" sudah ada di daftar favorit Anda.';
+            $message = 'Film ' . $cleanTitle . ' sudah ada di daftar favorit Anda.';
         } else {
-            $message = 'Movie "' . $request->title . '" is already in your favorites list.';
+            $message = 'Movie ' . $cleanTitle . ' is already in your favorites list.';
         }
 
         return back()->with('warning', $message);
     }
+
 
     public function destroyFavorite($id)
     {

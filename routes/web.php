@@ -20,7 +20,6 @@ Route::middleware('guest')->group(function () {
     Route::post('/register', [AuthController::class, 'register_process'])->name('signup');
 });
 
-
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
