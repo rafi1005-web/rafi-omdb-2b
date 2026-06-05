@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     'login' => 'Login',
     'register' => 'Register',
     'logout' => 'Logout',
@@ -16,6 +15,9 @@ return [
     'hi' => 'Hi',
 
 
+    'search_movies' => 'Search Movies',
+    'favorite_movies' => 'Favorite Movies',
+
     'email_required' => 'Email address is required.',
     'email_invalid' => 'Please enter a valid email address.',
     'email_unique' => 'This email is already registered.',
@@ -25,9 +27,15 @@ return [
     'name_required' => 'Full name is required.',
     'name_min' => 'Full name must be at least 3 characters.',
 
-
     'login_success' => 'Login successful!',
     'login_failed' => 'Invalid email or password.',
     'register_success' => 'Registration successful!',
     'logout_success' => 'You have successfully logged out.',
+
+    'logged_in' => 'Logged in',
+    'just_now' => 'just now',
+    'minute_ago' => '1 minute ago',
+    'minutes_ago' => 'minutes ago',
+    'hour_ago' => '1 hour',
+    'hours_ago' => 'hours',
 ];

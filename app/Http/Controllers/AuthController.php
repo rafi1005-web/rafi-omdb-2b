@@ -38,6 +38,7 @@ class AuthController extends Controller
         ], $messages);
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+            session(['login_time' => now()]);
             return redirect()->route('dashboard')->with('success', __('auth.login_success') . ' ' . Auth::user()->name);
         }
 

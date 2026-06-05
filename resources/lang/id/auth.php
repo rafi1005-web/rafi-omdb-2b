@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     'login' => 'Masuk',
     'register' => 'Daftar',
     'logout' => 'Keluar',
@@ -16,6 +15,9 @@ return [
     'hi' => 'Halo',
 
 
+    'search_movies' => 'Cari Film',
+    'favorite_movies' => 'Film Favorit',
+
     'email_required' => 'Alamat email wajib diisi.',
     'email_invalid' => 'Masukkan alamat email yang valid.',
     'email_unique' => 'Email ini sudah terdaftar.',
@@ -25,9 +27,15 @@ return [
     'name_required' => 'Nama lengkap wajib diisi.',
     'name_min' => 'Nama lengkap minimal 3 karakter.',
 
-
     'login_success' => 'Login berhasil!',
     'login_failed' => 'Email atau kata sandi salah.',
     'register_success' => 'Registrasi berhasil!',
     'logout_success' => 'Anda telah berhasil keluar.',
+
+    'logged_in' => 'Masuk',
+    'just_now' => 'baru saja',
+    'minute_ago' => '1 menit yang lalu',
+    'minutes_ago' => 'menit yang lalu',
+    'hour_ago' => '1 jam',
+    'hours_ago' => 'jam',
 ];

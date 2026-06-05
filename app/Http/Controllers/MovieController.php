@@ -3,14 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
+use App\Services\MovieService;
 use App\Models\Favorite;
 
 class MovieController extends Controller
 {
-    private $apiKey = '145ec45b';
-    private $baseUrl = 'http://www.omdbapi.com/';
+    protected $movieService;
 
+    public function __construct(MovieService $movieService)
+    {
+        $this->movieService = $movieService;
+    }
 
     public function index(Request $request)
     {
@@ -18,42 +21,25 @@ class MovieController extends Controller
         $movies = [];
 
         if ($keyword) {
-            $response = Http::get($this->baseUrl, [
-                'apikey' => $this->apiKey,
-                's' => $keyword
-            ]);
-            $movies = $response->successful() ? ($response->json()['Search'] ?? []) : [];
+            $movies = $this->movieService->searchMovies($keyword);
             session(['search_results' => $movies]);
         }
 
         return view('movies.index', compact('movies'));
     }
 
-    public function allMovies()
-    {
-        $movies = session('search_results', []);
-        return view('movies.all', compact('movies'));
-    }
-
-
     public function detail($id)
     {
-        $response = Http::get($this->baseUrl, [
-            'i' => $id,
-            'apikey' => $this->apiKey
-        ]);
-        $movie = $response->json();
+        $movie = $this->movieService->getMovieDetail($id);
         $isFavorited = Favorite::where('user_id', auth()->id())->where('imdb_id', $id)->exists();
         return view('movies.detail', compact('movie', 'isFavorited'));
     }
-
 
     public function listFavorites()
     {
         $favorites = Favorite::where('user_id', auth()->id())->get();
         return view('favoritemovie.favorites', compact('favorites'));
     }
-
 
     public function storeFavorite(Request $request)
     {
@@ -69,7 +55,6 @@ class MovieController extends Controller
                 'type' => $request->type,
             ]);
 
-
             $cleanTitle = html_entity_decode($request->title, ENT_QUOTES, 'UTF-8');
 
             if (app()->getLocale() == 'id') {
@@ -80,7 +65,6 @@ class MovieController extends Controller
 
             return back()->with('success', $message);
         }
-
 
         $cleanTitle = html_entity_decode($request->title, ENT_QUOTES, 'UTF-8');
 
@@ -93,7 +77,6 @@ class MovieController extends Controller
         return back()->with('warning', $message);
     }
 
-
     public function destroyFavorite($id)
     {
         $favorite = Favorite::where('user_id', auth()->id())->where('imdb_id', $id)->first();
@@ -101,7 +84,6 @@ class MovieController extends Controller
         if ($favorite) {
             $title = $favorite->title;
             $favorite->delete();
-
 
             $cleanTitle = html_entity_decode($title, ENT_QUOTES, 'UTF-8');
 
