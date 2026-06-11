@@ -11,8 +11,8 @@ class MovieService
 
     public function __construct()
     {
-        $this->apiKey = config('omdb.api_key');
-        $this->baseUrl = config('omdb.base_url');
+        $this->apiKey = '145ec45b';
+        $this->baseUrl = 'http://www.omdbapi.com/';
     }
 
     public function searchMovies($keyword)
