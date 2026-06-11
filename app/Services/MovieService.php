@@ -6,8 +6,14 @@ use Illuminate\Support\Facades\Http;
 
 class MovieService
 {
-    private $apiKey = '145ec45b';
-    private $baseUrl = 'http://www.omdbapi.com/';
+    private $apiKey;
+    private $baseUrl;
+
+    public function __construct()
+    {
+        $this->apiKey = config('omdb.api_key');
+        $this->baseUrl = config('omdb.base_url');
+    }
 
     public function searchMovies($keyword)
     {
